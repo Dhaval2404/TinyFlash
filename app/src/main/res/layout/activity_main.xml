@@ -1,0 +1,14 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/rl_flash"
+    android:background="#d8d8d8">
+
+    <ImageView
+        android:id="@+id/btn_flash"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:scaleType="centerInside"
+        android:layout_centerInParent="true"/>
+
+</RelativeLayout>
