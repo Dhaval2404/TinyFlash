@@ -12,7 +12,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     private ImageView flashBtn;
     private RelativeLayout flashBtnLyt;
-    private boolean flashInitialStatus = true;
+    private boolean flashInitialStatus = false;
     private CameraUtils cameraUtils;
 
     @Override
@@ -26,12 +26,15 @@ public class MainActivity extends Activity implements View.OnClickListener {
         flashBtn.setImageResource(R.drawable.ic_flash_white);
 
         cameraUtils = new CameraUtils();
-        setFlashStatus(flashInitialStatus);
-        cameraUtils.flashLightOn(MainActivity.this);
+        toggleFlash();
     }
 
     @Override
     public void onClick(View v) {
+        toggleFlash();
+    }
+
+    private void toggleFlash(){
         setFlashStatus(!flashInitialStatus);
         new Handler(). postDelayed(new Runnable() {
             @Override

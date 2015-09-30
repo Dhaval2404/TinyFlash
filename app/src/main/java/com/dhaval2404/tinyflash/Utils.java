@@ -11,5 +11,5 @@ public class Utils {
     public static boolean hasFlashFeature(Context context){
         return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
     }
-
+    
 }
