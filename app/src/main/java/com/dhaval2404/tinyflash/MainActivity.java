@@ -1,7 +1,10 @@
 package com.dhaval2404.tinyflash;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -19,19 +22,22 @@ public class MainActivity extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        flashBtnLyt = (RelativeLayout) findViewById(R.id.rl_flash);
+        flashBtnLyt = findViewById(R.id.rl_flash);
         flashBtnLyt.setOnClickListener(this);
 
-        flashBtn = (ImageView) findViewById(R.id.btn_flash);
-        flashBtn.setImageResource(R.drawable.ic_flash_white);
+        flashBtn = findViewById(R.id.btn_flash);
 
         cameraUtils = new CameraUtils();
-        toggleFlash();
+        setFlashStatus(false);
     }
 
     @Override
     public void onClick(View v) {
-        toggleFlash();
+        if(isPermissionGranted()) {
+            toggleFlash();
+        }else{
+            requestPermission();
+        }
     }
 
     private void toggleFlash(){
@@ -63,6 +69,27 @@ public class MainActivity extends Activity implements View.OnClickListener {
     protected void onDestroy() {
         cameraUtils.flashLightOff(this);
         super.onDestroy();
+    }
+
+    private void requestPermission(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, 1);
+        }else{
+            toggleFlash();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        if(isPermissionGranted()){
+            toggleFlash();
+        }
+    }
+
+    private boolean isPermissionGranted(){
+        String permission = Manifest.permission.CAMERA;
+        int res = checkCallingOrSelfPermission(permission);
+        return (res == PackageManager.PERMISSION_GRANTED);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.dhaval2404.tinyflash;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.hardware.Camera;
 
 /**
@@ -11,7 +12,7 @@ public class CameraUtils {
 
     public void flashLightOn(Context context) {
         try {
-            if (Utils.hasFlashFeature(context)) {
+            if (hasFlashFeature(context)) {
                 cam = Camera.open();
                 Camera.Parameters p = cam.getParameters();
                 p.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
@@ -25,7 +26,7 @@ public class CameraUtils {
 
     public void flashLightOff(Context context) {
         try {
-            if (Utils.hasFlashFeature(context) && cam != null) {
+            if (hasFlashFeature(context) && cam != null) {
                 cam.stopPreview();
                 cam.release();
                 cam = null;
@@ -33,6 +34,10 @@ public class CameraUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static boolean hasFlashFeature(Context context){
+        return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
     }
 
 }

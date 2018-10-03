@@ -8,6 +8,7 @@
         android:id="@+id/btn_flash"
         android:layout_width="160dp"
         android:layout_height="160dp"
+        android:src="@drawable/ic_flash_white"
         android:scaleType="centerInside"
         android:layout_centerInParent="true"/>
 
